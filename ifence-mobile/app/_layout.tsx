@@ -11,8 +11,8 @@ import { useEffect } from "react";
 import "react-native-reanimated";
 
 import { useColorScheme } from "@/hooks/useColorScheme";
+import DrawerLayout from "./DrawerLayout"; // Novo arquivo que cria o Drawer
 
-// Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
@@ -35,18 +35,21 @@ export default function RootLayout() {
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
       <Stack>
         <Stack.Screen name="index" options={{ headerShown: false }} />
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        
+        {/* Aqui substituímos o (tabs) pelo Drawer */}
+        <Stack.Screen
+          name="(drawer)"
+          options={{ headerShown: false }}
+        >
+          {() => <DrawerLayout />}
+        </Stack.Screen>
+
         <Stack.Screen name="auth/LoginScreen" options={{ headerShown: false }} />
         <Stack.Screen name="Screens/ListarLocalizacoesPulseira" options={{ headerShown: false }} />
         <Stack.Screen name="Screens/EditarUsuario" options={{ headerShown: false }} />
         <Stack.Screen name="Screens/ListarRotasPulseiras" options={{ headerShown: false }} />
         <Stack.Screen name="Screens/Map" options={{ headerShown: false }} />
-        {/* <Stack.Screen name="(auth)/LoginScreen" /> */}
-        <Stack.Screen
-          name="auth/CadastroScreen"
-          // options={{ title: "Criar Conta" }}
-          options={{ headerShown: false }}
-        />
+        <Stack.Screen name="auth/CadastroScreen" options={{ headerShown: false }} />
         <Stack.Screen name="+not-found" />
       </Stack>
       <StatusBar style="auto" />
