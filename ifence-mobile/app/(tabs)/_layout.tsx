@@ -1,77 +1,74 @@
-import { Tabs } from "expo-router";
+import { Drawer } from "expo-router/drawer";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import React from "react";
-import { Image, Platform } from "react-native";
-
-import { HapticTab } from "@/components/HapticTab";
-import { IconSymbol } from "@/components/ui/IconSymbol";
-import TabBarBackground from "@/components/ui/TabBarBackground";
+import { Image } from "react-native";
 import { Colors } from "@/constants/Colors";
 import { useColorScheme } from "@/hooks/useColorScheme";
+import { IconSymbol } from "@/components/ui/IconSymbol";
 
-export default function TabLayout() {
+export default function DrawerLayout() {
   const colorScheme = useColorScheme();
 
   return (
-    <Tabs
-      screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
-        headerShown: false,
-        tabBarButton: HapticTab,
-        tabBarBackground: TabBarBackground,
-        tabBarStyle: Platform.select({
-          ios: {
-            position: "absolute",
-          },
-          default: {},
-        }),
-      }}
-    >
-      <Tabs.Screen
-        name="Home"
-        options={{
-          title: "Home",
-          tabBarIcon: ({ color }) => (
-            <IconSymbol size={28} name="house.fill" color={color} />
-          ),
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <Drawer
+        screenOptions={{
+          headerStyle: { backgroundColor: Colors[colorScheme ?? "light"].tint },
+          headerTintColor: "#fff",
+          drawerActiveTintColor: Colors[colorScheme ?? "light"].tint,
+          drawerInactiveTintColor: "#555",
+          drawerStyle: { backgroundColor: "#f8fafc", width: 240 },
         }}
-      />
-      <Tabs.Screen
-        name="AdicionarPulseiraScreen"
-        options={{
-          title: "Pulseiras",
-          tabBarIcon: ({ color, size }) => (
-            <Image
-              source={require("@/assets/images/image.png")}
-              style={{ width: size, height: size, tintColor: color }}
-            />
-          ),
-        }}
-      />
+      >
+        <Drawer.Screen
+          name="Home"
+          options={{
+            title: "Home",
+            drawerIcon: ({ color, size }) => (
+              <IconSymbol size={size} name="house.fill" color={color} />
+            ),
+          }}
+        />
 
-      <Tabs.Screen
-        name="ListarCercas"
-        options={{
-          title: "Cercas",
-          tabBarIcon: ({ color, size }) => (
-            <Image
-              source={require("@/assets/images/TablerFenceFilled.png")}
-              style={{ width: size, height: size, tintColor: color }}
-            />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="Alarme"
-        options={{
-          title: "Monitorar cercas",
-          tabBarIcon: ({ color, size }) => (
-            <Image
-              source={require("@/assets/images/MaterialSymbolsEyeTrackingOutline.png")}
-              style={{ width: size, height: size, tintColor: color }}
-            />
-          ),
-        }}
-      />
-    </Tabs>
+        <Drawer.Screen
+          name="AdicionarPulseiraScreen"
+          options={{
+            title: "Pulseiras",
+            drawerIcon: ({ color, size }) => (
+              <Image
+                source={require("@/assets/images/image.png")}
+                style={{ width: size, height: size, tintColor: color }}
+              />
+            ),
+          }}
+        />
+
+        <Drawer.Screen
+          name="ListarCercas"
+          options={{
+            title: "Cercas",
+            drawerIcon: ({ color, size }) => (
+              <Image
+                source={require("@/assets/images/TablerFenceFilled.png")}
+                style={{ width: size, height: size, tintColor: color }}
+              />
+            ),
+          }}
+        />
+
+        <Drawer.Screen
+          name="Alarme"
+          options={{
+            title: "Monitorar cercas",
+            drawerIcon: ({ color, size }) => (
+              <Image
+                source={require("@/assets/images/MaterialSymbolsEyeTrackingOutline.png")}
+                style={{ width: size, height: size, tintColor: color }}
+              />
+            ),
+          }}
+        />
+      </Drawer>
+    </GestureHandlerRootView>
   );
 }
